@@ -11,7 +11,7 @@ body {
   background: url('pictures/backgrounds.jpg') no-repeat center center fixed;
   background-size: cover; /* Ensures the image covers the full background */
   color: black; /* Adjust text color for readability */
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Sigmar-Regular', sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -44,4 +44,38 @@ button {
 }
 button:hover {
   background-color: #45a049;
+}
+
+/* Container for buttons to align them nicely */
+#timer-controls, #todo-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Active session timer on a new line */
+#active-session-timer {
+  display: block;
+  margin-top: 5px;
+  font-size: 1.2em;
+}
+
+/* Section spacing */
+#new-session, #active-session, #session-list, #garden, #archive {
+  margin-bottom: 15px;
+}
+
+/* List styling */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+ul li {
+  margin: 5px 0;
+}
+
+/* Center align session info */
+#session-info {
+  text-align: center;
+  margin-bottom: 10px;
 }
