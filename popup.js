@@ -277,20 +277,20 @@ document.addEventListener('DOMContentLoaded', () => {
         chrome.storage.local.get("activeSession", (result) => {
           const activeSession = result.activeSession;
           const activeTasksList = document.getElementById("active-tasks");
+          const tasksContainer = document.getElementById("active-tasks-container");
           activeTasksList.innerHTML = ''; // Clear existing tasks
       
           if (activeSession) {
             activeSessionName.textContent = activeSession.name;
             
-            // Display tasks if available
             if (activeSession.tasks && activeSession.tasks.length > 0) {
+              // Show the tasks container if tasks exist.
+              tasksContainer.style.display = "block";
               activeSession.tasks.forEach((task, index) => {
                 const li = document.createElement("li");
                 const checkbox = document.createElement("input");
                 checkbox.type = "checkbox";
                 checkbox.checked = task.done;
-                
-                // When the checkbox is toggled, update the task status.
                 checkbox.addEventListener("change", () => {
                   task.done = checkbox.checked;
                   // Update active session storage.
@@ -311,18 +311,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                   });
                 });
-                
                 li.appendChild(checkbox);
                 li.appendChild(document.createTextNode(" " + task.text));
                 activeTasksList.appendChild(li);
               });
+            } else {
+              // Hide tasks container if no tasks exist.
+              tasksContainer.style.display = "none";
             }
           } else {
             activeSessionName.textContent = "";
             activeSessionTimer.textContent = "";
+            tasksContainer.style.display = "none";
           }
         });
       }
+      
       
   
     // Update the garden display.
