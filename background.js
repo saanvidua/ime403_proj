@@ -1,3 +1,24 @@
+const giftIcons = [
+    "icons/zzplant.png",
+    "icons/alocasiaplant.png",
+    "icons/calethea.png",
+    "icons/fanplant.png", 
+    "icons/firefly.png",
+    "icons/peacelily.png",
+    "icons/plants.png",
+    "icons/worm.png", 
+    "icons/snakesplant.png",
+    "icons/snakeplant.png",
+    "icons/ladybug.png",
+    "icons/worm.png", 
+    "icons/snail.png"
+  ];
+  
+  function getRandomGiftIcon() {
+    const index = Math.floor(Math.random() * giftIcons.length);
+    return giftIcons[index];
+  }
+
 chrome.runtime.onInstalled.addListener(() => {
     console.log("Evergreen Extension Installed");
   });
@@ -34,17 +55,17 @@ chrome.runtime.onInstalled.addListener(() => {
           const currentRewards = activeSession.rewardCount || 0;
           if (hoursCompleted > currentRewards) {
             activeSession.rewardCount = hoursCompleted;
-            // For now, add the letter "P" as a plant reward.
-            garden.push("P");
+            const giftIcon = getRandomGiftIcon();
+            garden.push(giftIcon);
             chrome.storage.local.set({ garden });
-            console.log("Added a new plant for 1 hour of productivity!");
+            console.log("Added a new friend for 1 hour of productivity!");
           }
           // Send a notification to the user.
           chrome.notifications.create("plantHourly_" + Date.now(), {
             type: "basic",
-            iconUrl: chrome.runtime.getURL(plantIcon),
-            title: "New Plant Earned!",
-            message: "Yay! You've earned a new plant for another hour of productivity."
+            iconUrl: chrome.runtime.getURL(giftIcons),
+            title: "New Friend Earned!",
+            message: "Yay! You've earned a new friend for another hour of productivity."
           });
 
           chrome.storage.local.set({ activeSession });

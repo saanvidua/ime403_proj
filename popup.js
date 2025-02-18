@@ -1,3 +1,24 @@
+const giftIcons = [
+    "icons/zzplant.png",
+    "icons/alocasiaplant.png",
+    "icons/calethea.png",
+    "icons/fanplant.png", 
+    "icons/firefly.png",
+    "icons/peacelily.png",
+    "icons/plants.png",
+    "icons/worm.png", 
+    "icons/snakesplant.png",
+    "icons/snakeplant.png",
+    "icons/ladybug.png",
+    "icons/worm.png", 
+    "icons/snail.png"
+  ];
+  
+  function getRandomGiftIcon() {
+    const index = Math.floor(Math.random() * giftIcons.length);
+    return giftIcons[index];
+  }
+
 document.addEventListener('DOMContentLoaded', () => {
     const sessionNameInput = document.getElementById('session-name');
     const createSessionButton = document.getElementById('create-session');
@@ -160,9 +181,8 @@ document.addEventListener('DOMContentLoaded', () => {
             activeSession.duration = activeSession.accumulatedTime;
             activeSession.startTime = null;
           }
-          const plantIcon = "icons/monstera_tsp.png";
-          garden.push(plantIcon);
-          //garden.push("E"); // "E" signifies an ended session reward (placeholder for now)
+          const giftIcon = getRandomGiftIcon();
+          garden.push(giftIcon);
           activeSession.ended = true;
           const idx = sessions.findIndex(s => s.name === activeSession.name);
           if (idx !== -1) {
@@ -177,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Send a notification for ending a session.
           chrome.notifications.create("plantSessionEnd_" + Date.now(), {
             type: "basic",
-            iconUrl: chrome.runtime.getURL(plantIcon),
+            iconUrl: chrome.runtime.getURL(gifIcon),
             title: "Session Ended - New Plant Added!",
             message: "You ended your session and earned a plant reward. Great work!"
             });
