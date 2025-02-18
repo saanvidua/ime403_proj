@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Evergreen - Productivity Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Create a New Session</h1>
+  <div id="new-session">
+    <input type="text" id="session-name" placeholder="Session Name">
+    <div id="todo-container">
+      <input type="text" id="todo-input" placeholder="Add a task">
+      <button id="add-task">Add Task</button>
+      <ul id="todo-list"></ul>
+    </div>
+    <button id="create-session">Create Session</button>
+  </div>
+  <hr>
+  <h2>Active Session</h2>
+  <div id="active-session">
+    <div id="session-info">
+      <span id="active-session-name"></span>
+      <span id="active-session-timer"></span>
+    </div>
+    <h3>Tasks</h3>
+    <ul id="active-tasks"></ul>
+    <div id="timer-controls">
+      <button id="start-session">Start</button>
+      <button id="pause-session">Pause</button>
+      <button id="end-session">End Session</button>
+      <button id="delete-session">Delete Session</button>
+    </div>
+  </div>
+  
+  <hr>
+  <h2>Previous Sessions</h2>
+  <div id="session-list"></div>
+  <hr>
+  <h2>Archive</h2>
+  <div id="archive"></div>
+  <hr>
+  <h2>Your Garden</h2>
+  <div id="garden"></div>
+  <script src="popup.js" defer></script>
+</body>
+</html>
+
+
