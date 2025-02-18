@@ -1,0 +1,9 @@
+@charset "UTF-8";
+/* CSS Document */
+body {
+  background: url('pictures/backgrounds.jpg') no-repeat center center fixed;
+  background-size: cover; /* Ensures the image covers the full background */
+  color: black; /* Adjust text color for readability */
+  font-family: 'Noto Sans', sans-serif;
+
+}
