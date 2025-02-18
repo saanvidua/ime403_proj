@@ -153,13 +153,16 @@ document.addEventListener('DOMContentLoaded', () => {
         let sessions = result.sessions || [];
         let garden = result.garden || [];
         if (activeSession) {
+            // If running, pause first.
           if (activeSession.startTime) {
             const currentElapsed = Math.floor((Date.now() - activeSession.startTime) / 1000);
             activeSession.accumulatedTime = (activeSession.accumulatedTime || 0) + currentElapsed;
             activeSession.duration = activeSession.accumulatedTime;
             activeSession.startTime = null;
           }
-          garden.push("E"); // "E" signifies an ended session reward.
+          const plantIcon = "icons/monstera_tsp.png";
+          garden.push(plantIcon);
+          //garden.push("E"); // "E" signifies an ended session reward (placeholder for now)
           activeSession.ended = true;
           const idx = sessions.findIndex(s => s.name === activeSession.name);
           if (idx !== -1) {
@@ -170,6 +173,14 @@ document.addEventListener('DOMContentLoaded', () => {
             updateArchiveList(sessions);
             updateActiveSessionUI();
             updateGarden(garden);
+
+            // Send a notification for ending a session.
+          chrome.notifications.create("plantSessionEnd_" + Date.now(), {
+            type: "basic",
+            iconUrl: chrome.runtime.getURL(plantIcon),
+            title: "Session Ended - New Plant Added!",
+            message: "You ended your session and earned a plant reward. Great work!"
+            });
           });
         }
       });
@@ -194,59 +205,56 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // Update the list of previous sessions.
     // Only display sessions that are not active and not ended.
-    function updateSessionList(sessions) {
-      chrome.storage.local.get("activeSession", (result) => {
-        const activeSession = result.activeSession;
-        sessionList.innerHTML = '';
-        sessions.forEach((session, index) => {
-          if ((activeSession && activeSession.name === session.name) || session.ended) return;
+// Update the list of previous sessions.
+// Only display sessions that are not active and not ended.
+function updateSessionList(sessions) {
+    chrome.storage.local.get("activeSession", (result) => {
+      const activeSession = result.activeSession;
+      sessionList.innerHTML = '';
+      sessions.forEach((session, index) => {
+        // Skip sessions that are active or ended.
+        if ((activeSession && activeSession.name === session.name) || session.ended) return;
   
-          const sessionElement = document.createElement('div');
-          sessionElement.textContent = `${session.name} - ${formatTime(session.duration)}`;
+        const sessionElement = document.createElement('div');
+        sessionElement.textContent = `${session.name} - ${formatTime(session.duration)}`;
   
-          const resumeButton = document.createElement('button');
-          resumeButton.textContent = 'Resume';
-          resumeButton.addEventListener('click', () => {
-            session.startTime = Date.now();
-            chrome.storage.local.set({ activeSession: session }, () => {
-              chrome.storage.local.get("sessions", (res) => {
-                let sessions = res.sessions || [];
-                const idx = sessions.findIndex(s => s.name === session.name);
-                if (idx !== -1) {
-                  sessions[idx] = session;
-                  chrome.storage.local.set({ sessions });
-                }
-                updateSessionList(sessions);
-                updateArchiveList(sessions);
-              });
-              updateActiveSessionUI();
-            });
-          });
-  
-          const pauseButton = document.createElement('button');
-          pauseButton.textContent = 'Pause';
-          pauseButton.addEventListener('click', () => {
-            if (session.startTime) {
-              const currentElapsed = Math.floor((Date.now() - session.startTime) / 1000);
-              session.accumulatedTime = (session.accumulatedTime || 0) + currentElapsed;
-              session.duration = session.accumulatedTime;
-              session.startTime = null;
-              chrome.storage.local.get("activeSession", (result) => {
-                const active = result.activeSession;
-                if (active && active.name === session.name) {
-                  chrome.storage.local.set({ activeSession: session });
-                }
-              });
+        // Button to resume the session.
+        const resumeButton = document.createElement('button');
+        resumeButton.textContent = 'Resume';
+        resumeButton.addEventListener('click', () => {
+          session.startTime = Date.now();
+          chrome.storage.local.set({ activeSession: session }, () => {
+            chrome.storage.local.get("sessions", (res) => {
+              let sessions = res.sessions || [];
+              const idx = sessions.findIndex(s => s.name === session.name);
+              if (idx !== -1) {
+                sessions[idx] = session;
+                chrome.storage.local.set({ sessions });
+              }
               updateSessionList(sessions);
-            }
+              updateArchiveList(sessions);
+            });
+            updateActiveSessionUI();
           });
-  
-          sessionElement.appendChild(resumeButton);
-          sessionElement.appendChild(pauseButton);
-          sessionList.appendChild(sessionElement);
         });
+  
+        // Button to delete the session.
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', () => {
+          sessions.splice(index, 1);
+          chrome.storage.local.set({ sessions }, () => {
+            updateSessionList(sessions);
+          });
+        });
+  
+        sessionElement.appendChild(resumeButton);
+        sessionElement.appendChild(deleteButton);
+        sessionList.appendChild(sessionElement);
       });
-    }
+    });
+  }
+  
   
     // Update the archive list.
     // Only display sessions that have been ended.
@@ -331,14 +339,26 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // Update the garden display.
     function updateGarden(garden) {
-      if (!gardenDiv) return;
-      gardenDiv.innerHTML = '';
-      garden.forEach(plant => {
-        const plantElement = document.createElement('div');
-        plantElement.textContent = plant;
-        gardenDiv.appendChild(plantElement);
-      });
-    }
+        if (!gardenDiv) return;
+        gardenDiv.innerHTML = '';
+        garden.forEach(plant => {
+          // If the plant string looks like an image file path, display it as an image.
+          if (typeof plant === 'string' && (plant.endsWith('.png') || plant.endsWith('.jpg') || plant.endsWith('.jpeg') || plant.endsWith('.gif'))) {
+            const img = document.createElement('img');
+            img.src = plant;
+            img.alt = "Plant";
+            img.style.width = "32px";  // Adjust size as needed
+            img.style.height = "32px";
+            gardenDiv.appendChild(img);
+          } else {
+            // Otherwise, show the text.
+            const plantElement = document.createElement('div');
+            plantElement.textContent = plant;
+            gardenDiv.appendChild(plantElement);
+          }
+        });
+      }
+      
   
     // Update the timer UI every second.
     timerInterval = setInterval(updateTimerUI, 1000);
