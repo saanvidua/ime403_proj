@@ -6,6 +6,18 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: 'Karla';
+  src: url('fonts/Karla.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 
 body {
   background: url('pictures/backgrounds.jpg') no-repeat center center fixed;
@@ -18,7 +30,7 @@ body {
 
 /* Popup container to make the popup wider and centered */
 #popup-container {
-  width: 300x;               /* Wider popup */
+  width: 300px;               /* Wider popup */
   margin: 20px auto;
   padding: 15px;
   /* background-color: rgba(255, 255, 255, 0.95); */
@@ -33,9 +45,10 @@ h1, h2, h3 {
 
 /* Button styling with new colors and spacing */
 button {
+  font-family: 'Karla', sans-serif;
   background-color: #4CAF50; /* Green button */
   color: white;
-  border: none;
+  border: #104712;
   padding: 10px 15px;
   margin: 5px;               /* Spacing between buttons */
   border-radius: 4px;
@@ -78,4 +91,32 @@ ul li {
 #session-info {
   text-align: center;
   margin-bottom: 10px;
+}
+
+/* Style for all text input boxes */
+input[type="text"] {
+  width: 80%;             /* Or any percentage or fixed width you like */
+  padding: 10px 12px;
+  margin: 8px auto;       /* 'auto' for left/right will center the block element */
+  display: block;         /* Make sure the input is a block element */
+  font-size: 1.1em;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  text-align: center;
+}
+
+/* On focus, highlight the input with a subtle shadow and a change in border color */
+input[type="text"]:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  outline: none;
+}
+
+/* Optional: Style the placeholder text */
+input[type="text"]::placeholder {
+  color: #aaa;
+  font-style: italic;
 }
