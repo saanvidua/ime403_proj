@@ -10,7 +10,7 @@
 body {
   background: url('pictures/backgrounds.jpg') no-repeat center center fixed;
   background-size: cover; /* Ensures the image covers the full background */
-  color: black; /* Adjust text color for readability */
+  color: #333; /* Adjust text color for readability */
   font-family: 'Sigmar-Regular', sans-serif;
   margin: 0;
   padding: 0;
@@ -21,7 +21,7 @@ body {
   width: 300x;               /* Wider popup */
   margin: 20px auto;
   padding: 15px;
-  background-color: rgba(255, 255, 255, 0.95);
+  /* background-color: rgba(255, 255, 255, 0.95); */
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
