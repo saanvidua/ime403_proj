@@ -122,3 +122,33 @@ input[type="text"]::placeholder {
   color: #59a176;
   font-style: italic;
 }
+
+/* Center-align the Create Session button */
+/* Apply the same style to all buttons, including "Create Session" and "Add Task" */
+button, #create-session {
+  font-family: 'Karla', sans-serif;
+  background-color: #4CAF50; /* Green button */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;               /* Spacing between buttons */
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: auto; /* Ensures button width is dynamic */
+  min-width: 120px; /* Ensures a consistent minimum size */
+}
+
+/* Center the Create Session button */
+#create-session {
+  margin: 10px auto; /* Centers the button */
+}
+
+/* Button hover effect remains consistent */
+button:hover, #create-session:hover {
+  background-color: #45a049;
+}
