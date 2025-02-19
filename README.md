@@ -1,5 +1,5 @@
 # Evergreen -- Your Productivity Garden
-###Initial release of the Chrome extension. 
+### Initial release of the Chrome extension. 
 
 ## How to Install the Evergreen Extension  
 ### 1. Enable Developer Mode in Chrome:  
