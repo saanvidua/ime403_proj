@@ -82,9 +82,11 @@ button:hover {
 ul {
   list-style-type: none;
   padding: 0;
+  text-align: center;
 }
 ul li {
   margin: 5px 0;
+  text-align: center;
 }
 
 /* Center align session info */
@@ -110,13 +112,13 @@ input[type="text"] {
 
 /* On focus, highlight the input with a subtle shadow and a change in border color */
 input[type="text"]:focus {
-  border-color: #4CAF50;
+  border-color: #0d4d0f;
   box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
   outline: none;
 }
 
 /* Optional: Style the placeholder text */
 input[type="text"]::placeholder {
-  color: #aaa;
+  color: #59a176;
   font-style: italic;
 }
