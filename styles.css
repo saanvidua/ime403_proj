@@ -152,3 +152,42 @@ button, #create-session {
 button:hover, #create-session:hover {
   background-color: #45a049;
 }
+
+.section {
+  background-color: rgba(0, 0, 0, 0);
+  border: 2px solid #4CAF50;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 15px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.section h2 {
+  background-color: #4CAF50;
+  color: white;
+  padding: 6px;
+  margin: -12px -12px 10px -12px; /* make the h2 align with the box edges */
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  text-align: center;
+}
+
+#garden {
+  background: url('pictures/soilbed.png') no-repeat left top;
+  background-size: cover;
+  width: 280px;
+  height: 280px;
+  border: 2px solid #4CAF50;
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#garden img {
+  width: 40px;
+  height: 40px;
+  margin: 4px;
+  object-fit: cover;
+}

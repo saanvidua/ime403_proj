@@ -8,57 +8,64 @@
 <body>
   <div id="popup-container">
     <h2>Evergreen: Productivity Tracker</h2>
-    <hr>
-    <h2>Create a New Session</h2>
-    <div id="new-session">
-      <input type="text" id="session-name" placeholder="Session Name" maxlength="100">
-      <div id="todo-container">
-        <input type="text" id="todo-input" placeholder="Add a task" maxlength="100">
-        <button id="add-task">Add Task</button>
-        <ul id="todo-list"></ul>
-      </div>
-      <button id="create-session">Create Session</button>
+
+    <div class="section">
+        <h2>Create a New Session</h2>
+        <div id="new-session">
+        <input type="text" id="session-name" placeholder="Session Name">
+        <div id="todo-container">
+            <input type="text" id="todo-input" placeholder="Add a task">
+            <button id="add-task">Add Task</button>
+            <ul id="todo-list"></ul>
+        </div>
+        <button id="create-session">Create Session</button>
+        </div>
     </div>
-    <hr>
-    <h2>Active Session</h2>
-    <div id="active-session">
-      <div id="session-info">
-        <span id="active-session-name"></span>
-        <span id="active-session-timer"></span>
-      </div>
-      <!-- Container for tasks header and list -->
-      <div id="active-tasks-container" style="display: none;">
-        <h3>Tasks</h3>
-        <ul id="active-tasks"></ul>
-      </div>
-      <div id="timer-controls">
-        <button id="start-session">Start</button>
-        <button id="pause-session">Pause</button>
-        <button id="end-session">End Session</button>
-        <button id="delete-session">Delete Session</button>
-      </div>
+    <div class="section">
+        <h2>Active Session</h2>
+        <div id="active-session">
+        <div id="session-info">
+            <span id="active-session-name"></span>
+            <span id="active-session-timer"></span>
+        </div>
+        <!-- Container for tasks header and list -->
+        <div id="active-tasks-container" style="display: none;">
+            <h3>Tasks</h3>
+            <ul id="active-tasks"></ul>
+        </div>
+        <div id="timer-controls">
+            <button id="start-session">Start</button>
+            <button id="pause-session">Pause</button>
+            <button id="end-session">End Session</button>
+            <button id="delete-session">Delete Session</button>
+        </div>
+        </div>
     </div>
-    <hr>
-    <h2>Paused Sessions</h2>
-    <div id="session-list"></div>
-    <hr>
-    <h2>Your Garden</h2>
-    <div id="garden"></div>
-    <hr>
-    <h2>Manage Blacklist</h2>
-    <div id="blacklist-management">
-        <input type="text" id="blacklist-url" placeholder="Add website to blacklist">
-        <button id="add-blacklist">Add</button>
-        <ul id="blacklist-sites"></ul>
+    <div class="section">
+        <h2>Paused Sessions</h2>
+        <div id="session-list">
     </div>
-    <hr>
-    <h2>Archive</h2>
-    <div id="archive"></div>
+    </div>
+        <div class="section">
+            <h2>Your Garden</h2>
+            <div id="garden"></div>
+        </div>
+    </div>
+    <div class="section">
+        <h2>Manage Blacklist</h2>
+        <div id="blacklist-management">
+            <input type="text" id="blacklist-url" placeholder="Add website to blacklist">
+            <button id="add-blacklist">Add</button>
+            <ul id="blacklist-sites"></ul>
+        </div>
+    </div>
+    <div class="section">
+        <h2>Archive</h2>
+        <div id="archive"></div>
+    </div>
   </div>
+
   <script src="popup.js" defer></script>
-  <script>
-    console.log("hahhaAHAHHAHAH");
-  </script>
 </body>
 </html>
 
