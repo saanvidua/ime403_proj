@@ -87,7 +87,7 @@ chrome.runtime.onInstalled.addListener(() => {
       // Optionally, show a notification (make sure to add "notifications" permission in your manifest)
       chrome.notifications.create("welcomeNotification", {
         type: "basic",
-        iconUrl: "icons/monstera_tsp.png",
+        iconUrl: "./icons/monstera_tsp.png",
         title: "Welcome to Evergreen!",
         message: "You've received your first welcome plant. You can find plants and friendly critters you earn in the Garden tab. Happy tracking!"
       });

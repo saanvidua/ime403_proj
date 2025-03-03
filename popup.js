@@ -1,3 +1,7 @@
+console.log("hahha");
+
+let seshCounter = 0;
+
 const giftIcons = [
     "icons/zzplant.png",
     "icons/alocasiaplant.png",
@@ -11,15 +15,23 @@ const giftIcons = [
     "icons/snakeplant.png",
     "icons/ladybug.png",
     "icons/worm.png", 
-    "icons/snail.png"
+    "icons/snail.png",
+    "icons/blooming_onion.gif"
   ];
-  
-  function getRandomGiftIcon() {
-    const index = Math.floor(Math.random() * giftIcons.length);
-    return giftIcons[index];
-  }
+
+function getAvailableGiftIcons(garden) { // want to ensure that icons are unique
+    return giftIcons.filter(icon => !garden.includes(icon));
+}
+
+function getRandomUniqueGiftIcon(garden) {
+    const availableIcons = getAvailableGiftIcons(garden);
+    if (availableIcons.length === 0) return null;  // no more unique icons available
+    const index = Math.floor(Math.random() * availableIcons.length);
+    return availableIcons[index];
+}
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("derpy")
     const sessionNameInput = document.getElementById('session-name');
     const createSessionButton = document.getElementById('create-session');
     const sessionList = document.getElementById('session-list');
@@ -32,6 +44,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const pauseSessionButton = document.getElementById('pause-session');
     const endSessionButton = document.getElementById('end-session');
     const deleteSessionButton = document.getElementById('delete-session');
+
+    const blacklistInput = document.getElementById('blacklist-url');
+    const addBlacklistButton = document.getElementById('add-blacklist');
+    const blacklistSitesList = document.getElementById('blacklist-sites');
   
     // To-do list elements for session creation.
     const todoInput = document.getElementById('todo-input');
@@ -41,7 +57,65 @@ document.addEventListener('DOMContentLoaded', () => {
     let timerInterval = null;
     // Array to hold tasks for the new session.
     let newSessionTasks = [];
-  
+
+    function getBaseDomain(hostname) {
+        const parts = hostname.split('.');
+        if (parts.length > 2) {
+            parts.shift();  // Remove subdomain (e.g., "www")
+        }
+        return parts.join('.');
+    }
+    chrome.storage.local.get('blacklist', (result) => {
+        renderBlacklist(result.blacklist || []);
+    });
+
+    function renderBlacklist(blacklist) {
+        blacklistSitesList.innerHTML = '';
+        blacklist.forEach((site, index) => {
+            const li = document.createElement('li');
+            li.textContent = site;
+
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.addEventListener('click', () => {
+                blacklist.splice(index, 1);
+                chrome.storage.local.set({ blacklist });
+                renderBlacklist(blacklist);
+            });
+
+            li.appendChild(removeButton);
+            blacklistSitesList.appendChild(li);
+        });
+    }
+    addBlacklistButton.addEventListener('click', () => {
+        const site = blacklistInput.value.trim();
+        if (site) {
+            // Normalize the URL to base domain
+            let baseDomain;
+            try {
+                const url = new URL(site.startsWith('http') ? site : `https://${site}`);
+                baseDomain = getBaseDomain(url.hostname);
+            } catch (e) {
+                alert('Invalid URL. Please enter a valid website.');
+                return;
+            }
+
+            chrome.storage.local.get('blacklist', (result) => {
+                let blacklist = result.blacklist || [];
+                if (!blacklist.includes(baseDomain)) {
+                    blacklist.push(baseDomain);
+                    chrome.storage.local.set({ blacklist });
+                    renderBlacklist(blacklist);
+                    blacklistInput.value = '';  // Clear input field
+                } else {
+                    alert(`${baseDomain} is already on your blacklist.`);
+                }
+            });
+        } else {
+            alert('Please enter a valid URL.');
+        }
+    });
+    
     // Update the active session display timer.
     function updateTimerUI() {
       chrome.storage.local.get("activeSession", (result) => {
@@ -97,6 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // Create a new session.
     createSessionButton.addEventListener('click', () => {
+      seshCounter++;
       const sessionName = sessionNameInput.value.trim();
       if (!sessionName) return;
   
@@ -107,7 +182,8 @@ document.addEventListener('DOMContentLoaded', () => {
         accumulatedTime: 0,
         rewardCount: 0,
         duration: 0,
-        ended: false
+        ended: false,
+        sessionID: seshCounter
       };
   
       chrome.storage.local.get(['sessions'], (result) => {
@@ -169,6 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // End the active session (award a plant reward and archive it).
     endSessionButton.addEventListener('click', () => {
+      console.log("derp")
       chrome.storage.local.get(["activeSession", "sessions", "garden"], (result) => {
         let activeSession = result.activeSession;
         let sessions = result.sessions || [];
@@ -181,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
             activeSession.duration = activeSession.accumulatedTime;
             activeSession.startTime = null;
           }
-          const giftIcon = getRandomGiftIcon();
+          const giftIcon = getRandomUniqueGiftIcon(garden);
           garden.push(giftIcon);
           activeSession.ended = true;
           const idx = sessions.findIndex(s => s.name === activeSession.name);
@@ -197,9 +274,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Send a notification for ending a session.
           chrome.notifications.create("plantSessionEnd_" + Date.now(), {
             type: "basic",
-            iconUrl: chrome.runtime.getURL(gifIcon),
-            title: "Session Ended - New Plant Added!",
-            message: "You ended your session and earned a plant reward. Great work!"
+            iconUrl: chrome.runtime.getURL(giftIcon),
+            title: "Session Ended!",
+            message: "You ended your session and earned a garden reward. Great work!"
             });
           });
         }
