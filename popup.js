@@ -150,7 +150,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add a new task to the to-do list for session creation.
     addTaskButton.addEventListener('click', () => {
       const taskText = todoInput.value.trim();
-      if (!taskText) return;
+      if (!taskText) {
+        alert("Task cannot be empty");
+        return;
+      }
+      if (taskText.length > 100) {
+        alert("Task description cannot exceed 100 characters");
+        return;
+      }
   
       // Create a task object.
       const task = { text: taskText, done: false };
@@ -173,7 +180,14 @@ document.addEventListener('DOMContentLoaded', () => {
     createSessionButton.addEventListener('click', () => {
       seshCounter++;
       const sessionName = sessionNameInput.value.trim();
-      if (!sessionName) return;
+      if (!sessionName) {
+        alert("Session name cannot be empty.");
+        return;
+      }
+      if (sessionName.length > 100) {
+        alert("Session name cannot exceed 100 characters");
+        return;
+      }
   
       const newSession = {
         name: sessionName,
