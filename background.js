@@ -11,7 +11,14 @@ const giftIcons = [
     "icons/snakeplant.png",
     "icons/ladybug.png",
     "icons/worm.png", 
-    "icons/snail.png"
+    "icons/snail.png",
+    "icons/blooming_onion.gif", 
+    "icons/yellowflower.gif",
+    "icons/growingrose.gif",
+    "icons/cactus.gif",
+    "icons/butterfly.gif",
+    "icons/beehive.gif",
+    "icons/bee_spin.gif"
   ];
   
   function getRandomGiftIcon() {

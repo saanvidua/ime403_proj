@@ -49,12 +49,14 @@ button {
   background-color: #4CAF50; /* Green button */
   color: white;
   border: #104712;
-  padding: 10px 15px;
+  padding: 5px 10px;
   margin: 5px;               /* Spacing between buttons */
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  text-align: center;
 }
+
 button:hover {
   background-color: #45a049;
 }
@@ -74,8 +76,54 @@ button:hover {
 }
 
 /* Section spacing */
-#new-session, #active-session, #session-list, #garden, #archive {
+#new-session, #active-session, #garden, #archive { /*#session-list, */
   margin-bottom: 15px;
+  text-align: center;
+}
+
+#blacklist-management { /*#session-list, */
+  text-align: center; /* Center text inside these sections */
+}
+
+#blacklist-management li { /*#session-list div,*/
+  display: flex;
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically */
+  gap: 10px; /* Space between text and buttons */
+  margin: 5px 0;
+}
+
+.sesh-lish {
+  display: flex;
+  width: 100%;
+  /* overflow-wrap: break-word;
+  word-break: break-all;*/
+}
+
+.sesh-lish button {
+  flex: 0 0 25%;
+  text-align: center;
+}
+
+.sesh-lish-text {
+  flex: 0 0 40%;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
+#blacklist-management {
+  text-align: center;
+}
+
+#blacklist-management input {
+  display: block;
+  margin: 0 auto 8px auto;  /* Center input with margin under it */
+  width: 80%;
+}
+
+#blacklist-management button {
+  display: block;
+  margin: 0 auto;  /* Centers the button */
 }
 
 /* List styling */
@@ -130,7 +178,7 @@ button, #create-session {
   background-color: #4CAF50; /* Green button */
   color: white;
   border: none;
-  padding: 10px 15px;
+  padding: 5px 15px;
   margin: 5px;               /* Spacing between buttons */
   border-radius: 4px;
   cursor: pointer;
@@ -139,8 +187,7 @@ button, #create-session {
   align-items: center;
   justify-content: center;
   text-align: center;
-  width: auto; /* Ensures button width is dynamic */
-  min-width: 120px; /* Ensures a consistent minimum size */
+  width: 120px; /* Ensures a consistent minimum size */
 }
 
 /* Center the Create Session button */
@@ -173,9 +220,9 @@ button:hover, #create-session:hover {
 }
 
 #garden {
-  background: url('pictures/soilbed.png') no-repeat left top;
+  background: url('pictures/soilbed.png') no-repeat center center;
   background-size: cover;
-  width: 280px;
+  width: 100%;
   height: 280px;
   border: 2px solid #4CAF50;
   border-radius: 8px;
@@ -183,11 +230,12 @@ button:hover, #create-session:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0;
 }
 
 #garden img {
-  width: 40px;
-  height: 40px;
-  margin: 4px;
+  width: 100%;
+  height: 100%;
+  /*margin: 4px;*/
   object-fit: cover;
 }

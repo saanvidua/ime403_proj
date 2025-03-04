@@ -16,7 +16,13 @@ const giftIcons = [
     "icons/ladybug.png",
     "icons/worm.png", 
     "icons/snail.png",
-    "icons/blooming_onion.gif"
+    "icons/blooming_onion.gif", 
+    "icons/yellowflower.gif",
+    "icons/growingrose.gif",
+    "icons/cactus.gif",
+    "icons/butterfly.gif",
+    "icons/beehive.gif",
+    "icons/bee_spin.gif"
   ];
 
 function getAvailableGiftIcons(garden) { // want to ensure that icons are unique
@@ -313,7 +319,12 @@ function updateSessionList(sessions) {
         if ((activeSession && activeSession.name === session.name) || session.ended) return;
   
         const sessionElement = document.createElement('div');
-        sessionElement.textContent = `${session.name} - ${formatTime(session.duration)}`;
+        sessionElement.classList.add('sesh-lish');
+        const childDiv = document.createElement('div');
+        childDiv.classList.add('sesh-lish-text');
+        childDiv.textContent = `${session.name} - ${formatTime(session.duration)}`;
+        sessionElement.appendChild(childDiv);
+
   
         // Button to resume the session.
         const resumeButton = document.createElement('button');

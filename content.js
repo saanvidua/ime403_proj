@@ -22,7 +22,7 @@ chrome.storage.local.get(['blacklist', 'garden'], (result) => {
             const randomIndex = Math.floor(Math.random() * garden.length);
             const removedPlant = garden.splice(randomIndex, 1)[0];
             chrome.storage.local.set({ garden }, () => {
-                alert(`You visited a blacklisted site! One of your plants (${removedPlant}) was removed.`);
+                alert(`You are visiting a blacklisted site! One of your gifts left your garden.`);
             });
         } else {
             alert('This site is blacklisted. Stay focused!');
